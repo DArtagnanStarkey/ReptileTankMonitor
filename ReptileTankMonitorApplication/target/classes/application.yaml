@@ -1,0 +1,28 @@
+spring:
+  # MySQL Database Configuration
+  datasource:
+    url: jdbc:mysql://localhost:3306/reptile_tanks?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: bmo
+    password: bmo
+
+  # JPA for MySQL - Using schema.sql instead of Hibernate DDL
+  jpa:
+    hibernate:
+      ddl-auto: update  # Changed from 'update' to 'none'
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+    generate-ddl: false  # Changed to false since we're using schema.sql
+    defer-datasource-initialization: true  # Moved inside jpa section
+  
+  # Initialize sample data - Changed to always
+  sql:
+    init:
+      mode: never  # Changed from 'never' to 'always'
+      schema-locations: classpath:schema.sql  # Added
+      data-locations: classpath:data.sql  # Added
